@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Apex Gaming Rigs - Ultimate Performance</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div id="main">
+        <header id="nav">
+            <h1 class="logo">RMX PLAY</h1>
+            <nav>
+                <a href="#">Laptops</a>
+                <a href="#">Desktops</a>
+                <a href="#">Specs</a>
+            </nav>
+        </header>
+
+        <div id="hero">
+            <h1>CHOOSE YOUR BATTLE STATION</h1>
+            <p>Hover over a machine to see its performance in action.</p>
+        </div>
+
+        <div id="rig-selector">
+            <div class="laptop-card" data-rig="enforcer">
+                <img src="Images/omen.jpg" alt="Apex Enforcer Gaming Laptop">
+                <h2>OMEN</h2>
+                <p>RTX 4070 | 16GB RAM</p>
+            </div>
+            
+            <div class="laptop-card" data-rig="vanguard">
+                <img src="Images/asus.jpg" alt="Apex Enforcer Gaming Laptop">
+                <h2>ASUS</h2>
+                <p>RTX 4080 | 32GB RAM</p>
+            </div>
+
+            <div class="laptop-card" data-rig="harbinger">
+                <img src="Images/AL.jpg" alt="Apex Enforcer Gaming Laptop">
+                <h2>THE HARBINGER</h2>
+                <p>RTX 4090 | 64GB RAM</p>
+            </div>
+        </div>
+
+        <div id="performance-display">
+            <div id="video-container">
+                <div class="video-placeholder">Hover a laptop to load video...</div>
+
+                <!-- UPDATED: Local MP4 Video -->
+                <video id="game-video" autoplay muted loop controls style="display:none;">
+                    <source src="" type="video/mp4">
+                    Your browser does not support HTML5 video.
+                </video>
+            </div>
+
+            <div id="stats-panel">
+                <div id="stats-title">
+                    <h2 id="game-name">Select a Rig...</h2>
+                    <span id="fps-counter">0 FPS</span>
+                </div>
+                
+                <div class="stat-bar-group">
+                    <label>GPU Usage</label>
+                    <div class="stat-bar" data-stat="gpu">
+                        <div class="bar-fill" style="width:0%;"></div>
+                        <span class="stat-value">0%</span>
+                    </div>
+                </div>
+
+                <div class="stat-bar-group">
+                    <label>CPU Temp</label>
+                    <div class="stat-bar" data-stat="temp">
+                        <div class="bar-fill" style="width:0%;"></div>
+                        <span class="stat-value">0°C</span>
+                    </div>
+                </div>
+
+                <a href="#" id="view-details-btn">VIEW FULL DETAILS</a>
+            </div>
+        </div>
+    </div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+<script src="script.js"></script>
+</body>
+</html>
