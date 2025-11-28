@@ -1,0 +1,457 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ritesh Khandagale | Cyber Portfolio</title>
+    <!-- Load Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Load Tech Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@300;400;500;600;700&family=Share+Tech+Mono&display=swap" rel="stylesheet">
+    
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        cyber: {
+                            black: '#050505',
+                            dark: '#0a0f14',
+                            primary: '#00f3ff', // Cyan
+                            secondary: '#ff00aa', // Neon Pink
+                            dim: 'rgba(0, 243, 255, 0.1)',
+                        }
+                    },
+                    fontFamily: {
+                        tech: ['"Rajdhani"', 'sans-serif'],
+                        mono: ['"Share Tech Mono"', 'monospace'],
+                    },
+                    backgroundImage: {
+                        'grid-pattern': "linear-gradient(to right, #1f2937 1px, transparent 1px), linear-gradient(to bottom, #1f2937 1px, transparent 1px)",
+                    }
+                }
+            }
+        }
+    </script>
+
+    <style>
+        body {
+            background-color: #030305;
+            color: #e2e8f0;
+            overflow-x: hidden;
+        }
+
+        /* --- Cyber Grid Background --- */
+        .cyber-grid {
+            position: fixed;
+            inset: 0;
+            z-index: -1;
+            background-size: 40px 40px;
+            background-image: 
+                linear-gradient(to right, rgba(0, 243, 255, 0.05) 1px, transparent 1px),
+                linear-gradient(to bottom, rgba(0, 243, 255, 0.05) 1px, transparent 1px);
+            mask-image: radial-gradient(circle at 50% 50%, black 40%, transparent 80%);
+        }
+
+        /* --- Tech Borders (Angled Corners) --- */
+        .tech-border {
+            position: relative;
+            background: rgba(10, 15, 20, 0.8);
+            border: 1px solid rgba(0, 243, 255, 0.3);
+            clip-path: polygon(
+                20px 0, 100% 0, 
+                100% calc(100% - 20px), calc(100% - 20px) 100%, 
+                0 100%, 0 20px
+            );
+            backdrop-filter: blur(5px);
+            transition: all 0.3s ease;
+        }
+
+        .tech-border:hover {
+            border-color: #00f3ff;
+            box-shadow: 0 0 15px rgba(0, 243, 255, 0.2);
+            transform: translateY(-2px);
+        }
+
+        /* Corner accents */
+        .tech-border::before, .tech-border::after {
+            content: '';
+            position: absolute;
+            width: 8px;
+            height: 8px;
+            background: #00f3ff;
+            transition: all 0.3s ease;
+        }
+        .tech-border::before { top: 0; left: 20px; } /* Top notch */
+        .tech-border::after { bottom: 0; right: 20px; } /* Bottom notch */
+
+
+        /* --- Glitch Text Effect --- */
+        .glitch-text {
+            position: relative;
+        }
+        .glitch-text::before, .glitch-text::after {
+            content: attr(data-text);
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: #030305;
+        }
+        .glitch-text::before {
+            left: 2px;
+            text-shadow: -1px 0 #ff00aa;
+            clip: rect(44px, 450px, 56px, 0);
+            animation: glitch-anim 5s infinite linear alternate-reverse;
+        }
+        .glitch-text::after {
+            left: -2px;
+            text-shadow: -1px 0 #00f3ff;
+            clip: rect(44px, 450px, 56px, 0);
+            animation: glitch-anim2 5s infinite linear alternate-reverse;
+        }
+
+        @keyframes glitch-anim {
+            0% { clip: rect(13px, 9999px, 81px, 0); }
+            5% { clip: rect(78px, 9999px, 91px, 0); }
+            10% { clip: rect(6px, 9999px, 4px, 0); }
+            100% { clip: rect(45px, 9999px, 12px, 0); }
+        }
+        @keyframes glitch-anim2 {
+            0% { clip: rect(65px, 9999px, 100px, 0); }
+            5% { clip: rect(4px, 9999px, 98px, 0); }
+            10% { clip: rect(25px, 9999px, 12px, 0); }
+            100% { clip: rect(3px, 9999px, 86px, 0); }
+        }
+
+        /* --- Task 1 Hologram Overlay --- */
+        .hologram-overlay {
+            background: rgba(0, 10, 20, 0.95);
+            border: 1px solid #00f3ff;
+            box-shadow: 0 0 20px rgba(0, 243, 255, 0.2), inset 0 0 20px rgba(0, 243, 255, 0.1);
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%) scale(0.9);
+            opacity: 0;
+            pointer-events: none;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            z-index: 20;
+            /* Scanning line animation inside */
+            background-image: linear-gradient(0deg, transparent 24%, rgba(0, 243, 255, .1) 25%, rgba(0, 243, 255, .1) 26%, transparent 27%, transparent 74%, rgba(0, 243, 255, .1) 75%, rgba(0, 243, 255, .1) 76%, transparent 77%, transparent), linear-gradient(90deg, transparent 24%, rgba(0, 243, 255, .1) 25%, rgba(0, 243, 255, .1) 26%, transparent 27%, transparent 74%, rgba(0, 243, 255, .1) 75%, rgba(0, 243, 255, .1) 76%, transparent 77%, transparent);
+            background-size: 30px 30px;
+        }
+
+        .performance-container:hover .hologram-overlay {
+            opacity: 1;
+            transform: translate(-50%, -60%) scale(1);
+        }
+
+        /* --- Scrollbar --- */
+        ::-webkit-scrollbar { width: 6px; }
+        ::-webkit-scrollbar-track { background: #050505; }
+        ::-webkit-scrollbar-thumb { background: #00f3ff; border-radius: 0; }
+        
+        .typewriter {
+            overflow: hidden;
+            white-space: nowrap;
+            border-right: 2px solid #00f3ff;
+            animation: typing 3.5s steps(40, end), blink-caret .75s step-end infinite;
+        }
+        @keyframes typing { from { width: 0 } to { width: 100% } }
+        @keyframes blink-caret { from, to { border-color: transparent } 50% { border-color: #00f3ff; } }
+    </style>
+</head>
+<body class="font-tech selection:bg-cyber-primary selection:text-black">
+
+    <!-- Cyber Grid Background -->
+    <div class="cyber-grid"></div>
+
+    <!-- Top HUD Navigation -->
+    <nav class="fixed w-full z-50 top-0 border-b border-cyber-dim bg-cyber-black/90 backdrop-blur-md">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex items-center justify-between h-16">
+                <!-- Logo -->
+                <div class="flex items-center">
+                    <span class="text-2xl font-bold text-cyber-primary tracking-widest font-mono">[RITESH_K]</span>
+                </div>
+                <!-- Nav Links -->
+                <div class="hidden md:block">
+                    <div class="ml-10 flex items-baseline space-x-8 font-mono text-sm">
+                        <a href="#profile" class="text-gray-300 hover:text-cyber-primary transition-colors duration-300 hover:shadow-[0_0_10px_rgba(0,243,255,0.5)] px-3 py-1">/PROFILE</a>
+                        <a href="#tasks" class="text-gray-300 hover:text-cyber-primary transition-colors duration-300 hover:shadow-[0_0_10px_rgba(0,243,255,0.5)] px-3 py-1">/TASKS</a>
+                        <a href="#projects" class="text-gray-300 hover:text-cyber-primary transition-colors duration-300 hover:shadow-[0_0_10px_rgba(0,243,255,0.5)] px-3 py-1">/PROJECTS</a>
+                        <a href="#database" class="text-gray-300 hover:text-cyber-primary transition-colors duration-300 hover:shadow-[0_0_10px_rgba(0,243,255,0.5)] px-3 py-1">/DATABASE</a>
+                    </div>
+                </div>
+                <!-- Status Indicator -->
+                <div class="flex items-center space-x-2">
+                    <span class="relative flex h-3 w-3">
+                        <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-cyber-secondary opacity-75"></span>
+                        <span class="relative inline-flex rounded-full h-3 w-3 bg-cyber-secondary"></span>
+                    </span>
+                    <span class="text-xs text-cyber-secondary font-mono">ONLINE</span>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-24 pb-12">
+
+        <!-- 1. Profile / Header Module -->
+        <section id="profile" class="mb-24 mt-10">
+            <div class="tech-border p-1 bg-cyber-dim/10">
+                <div class="p-8 md:p-12 flex flex-col md:flex-row items-center gap-12 relative overflow-hidden">
+                    
+                    <!-- Decorative Background Elements -->
+                    <div class="absolute top-0 right-0 w-64 h-64 bg-cyber-primary/5 rounded-full blur-3xl -z-10"></div>
+                    <div class="absolute bottom-0 left-0 w-64 h-64 bg-cyber-secondary/5 rounded-full blur-3xl -z-10"></div>
+
+                  <!-- Left: Profile Image HUD -->
+<div class="relative shrink-0 group">
+    <!-- Spinning Rings -->
+    <div class="absolute inset-0 border border-cyber-primary/30 rounded-full animate-[spin_10s_linear_infinite]"></div>
+    <div class="absolute inset-2 border border-dashed border-cyber-secondary/30 rounded-full animate-[spin_15s_linear_infinite_reverse]"></div>
+    
+    <div class="w-48 h-48 md:w-64 md:h-64 rounded-full overflow-hidden border-4 border-cyber-dark relative z-10 p-1 bg-cyber-dark">
+        <img src="Images/PIC.jpeg" alt="Profile" class="w-full h-full rounded-full object-cover filter grayscale group-hover:grayscale-0 transition duration-500">
+    </div>
+    
+    <!-- HUD Label -->
+    <div class="absolute bottom-0 left-1/2 -translate-x-1/2 bg-cyber-black border border-cyber-primary px-3 py-0.5 text-xs text-cyber-primary font-mono z-20">
+        ID: 8329805338
+    </div>
+</div>
+
+                    <!-- Right: Info -->
+                    <div class="flex-1 text-center md:text-left">
+                        <h2 class="text-cyber-primary font-mono text-sm tracking-[0.3em] mb-2">SYSTEM ARCHITECT // INTERN</h2>
+                        <h1 class="text-5xl md:text-7xl font-bold text-white mb-4 glitch-text" data-text="RITESH KHANDAGALE">
+                            RITESH KHANDAGALE
+                        </h1>
+                        <div class="typewriter inline-block mb-6">
+                            <p class="text-lg md:text-xl text-gray-400 font-mono">Initializing Internship Sequence @ oasis Infobyte...</p>
+                        </div>
+                        
+                        <!-- Action Buttons -->
+                        <div class="flex flex-wrap gap-4 justify-center md:justify-start mt-4">
+                            <a href="Ritesh_Khandagale_Resume.docx" class="group relative px-6 py-3 font-mono font-bold text-cyber-black bg-cyber-primary hover:bg-white transition-all overflow-hidden clip-path-button">
+                                <span class="relative z-10 flex items-center gap-2">
+                                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"/></svg>
+                                    DOWNLOAD_RESUME
+                                </span>
+                                <!-- Button Glitch Effect -->
+                                <div class="absolute inset-0 bg-white transform -translate-x-full group-hover:translate-x-0 transition-transform duration-200 opacity-30"></div>
+                            </a>
+                            
+                            <a href="mailto:ritesh.khandagale06@gmail.com" class="px-6 py-3 font-mono font-bold text-cyber-primary border border-cyber-primary hover:bg-cyber-primary/10 transition-all">
+                                :: CONTACT_ME
+                            </a>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </section>
+
+       
+
+        <!-- 3. Projects Database -->
+        <section id="projects" class="mb-24">
+            <div class="flex items-center gap-4 mb-8">
+                <span class="text-3xl font-bold text-white glitch-text" data-text="PROJECT_DATABASE">PROJECT_DATABASE</span>
+                <div class="h-px bg-gradient-to-r from-cyber-secondary to-transparent flex-1"></div>
+            </div>
+
+            <div class="grid md:grid-cols-3 gap-6">
+                <!-- Card 1 -->
+                <div class="tech-border bg-cyber-dark/50 p-6 hover:bg-cyber-primary/5 group transition-colors">
+                    <div class="flex justify-between items-start mb-4">
+                        <div class="text-cyber-secondary text-4xl font-mono opacity-50 font-bold">01</div>
+                        <div class="bg-cyber-secondary/20 text-cyber-secondary px-2 py-0.5 text-[10px] font-mono border border-cyber-secondary/50">WEB_APP</div>
+                    </div>
+                    <h3 class="text-xl font-bold text-white mb-2 group-hover:text-cyber-primary transition">MOVIORA</h3>
+                    <p class="text-gray-400 text-sm mb-4 font-mono leading-relaxed">
+                        Full-stack movie booking system. Implements PHP/MySQL backend for session management and real-time seat allocation logic.
+                    </p>
+                    <div class="flex gap-2 font-mono text-xs text-cyber-primary">
+                        <span>[PHP]</span> <span>[MySQL]</span> <span>[JS]</span>
+                    </div>
+                </div>
+
+                <!-- Card 2 -->
+                <div class="tech-border bg-cyber-dark/50 p-6 hover:bg-cyber-primary/5 group transition-colors">
+                    <div class="flex justify-between items-start mb-4">
+                        <div class="text-cyber-secondary text-4xl font-mono opacity-50 font-bold">02</div>
+                        <div class="bg-cyber-secondary/20 text-cyber-secondary px-2 py-0.5 text-[10px] font-mono border border-cyber-secondary/50">SYSTEM</div>
+                    </div>
+                    <h3 class="text-xl font-bold text-white mb-2 group-hover:text-cyber-primary transition">GRIEVANCE_SYS</h3>
+                    <p class="text-gray-400 text-sm mb-4 font-mono leading-relaxed">
+                        Secure complaint tracking platform. Features RBAC (Role-Based Access Control) for admin/student separation and audit trails.
+                    </p>
+                    <div class="flex gap-2 font-mono text-xs text-cyber-primary">
+                        <span>[Security]</span> <span>[DB_Mgmt]</span>
+                    </div>
+                </div>
+
+                <!-- Card 3 -->
+                <div class="tech-border bg-cyber-dark/50 p-6 hover:bg-cyber-primary/5 group transition-colors">
+                    <div class="flex justify-between items-start mb-4">
+                        <div class="text-cyber-secondary text-4xl font-mono opacity-50 font-bold">03</div>
+                        <div class="bg-cyber-secondary/20 text-cyber-secondary px-2 py-0.5 text-[10px] font-mono border border-cyber-secondary/50">AI/ML</div>
+                    </div>
+                    <h3 class="text-xl font-bold text-white mb-2 group-hover:text-cyber-primary transition">NLP_PIPELINE</h3>
+                    <p class="text-gray-400 text-sm mb-4 font-mono leading-relaxed">
+                        Text preprocessing engine using NLTK. Performs tokenization, lemmatization, and sentiment vector analysis.
+                    </p>
+                    <div class="flex gap-2 font-mono text-xs text-cyber-primary">
+                        <span>[Python]</span> <span>[NLTK]</span> <span>[AI]</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 4. Skills & Certs Data Bank -->
+        <section id="database">
+            <div class="flex items-center gap-4 mb-8">
+                <span class="text-3xl font-bold text-white glitch-text" data-text="SKILL_MATRIX">SKILL_MATRIX</span>
+                <div class="h-px bg-gradient-to-r from-purple-500 to-transparent flex-1"></div>
+            </div>
+
+            <div class="grid md:grid-cols-12 gap-6">
+                
+                <!-- Certifications (Left Col) -->
+                <div class="md:col-span-4 space-y-4">
+                    <div class="tech-border p-5 bg-gradient-to-br from-cyber-dark to-yellow-900/10 border-l-4 border-l-yellow-500">
+                        <div class="flex items-center gap-3 mb-2">
+                            <svg class="w-5 h-5 text-yellow-500" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 3v4M3 5h4M6 17v4m-2-2h4m5-16l2.286 6.857L21 12l-5.714 2.143L13 21l-2.286-6.857L5 12l5.714-2.143L13 3z" /></svg>
+                            <h4 class="font-bold text-white font-mono">SQL 21 DAYS CHALLENGE</h4>
+                        </div>
+                        <p class="text-xs text-gray-400 font-mono pl-8">ISSUER: INDIAN DATA CLUB</p>
+                        <p class="text-xs text-yellow-500/80 font-mono pl-8 mt-1">> COMPLETED: ADVANCED QUERIES</p>
+                    </div>
+
+                    <div class="tech-border p-4 border-l-4 border-l-blue-500">
+                        <h4 class="font-bold text-white font-mono text-sm">SQL CERTIFICATION</h4>
+                        <p class="text-xs text-gray-500 font-mono">TESTDOME</p>
+                    </div>
+
+                    <div class="tech-border p-4 border-l-4 border-l-blue-500">
+                        <h4 class="font-bold text-white font-mono text-sm">C++ CERTIFICATION</h4>
+                        <p class="text-xs text-gray-500 font-mono">TESTDOME</p>
+                    </div>
+                </div>
+
+                <!-- Skills Matrix (Right Col) -->
+                <div class="md:col-span-8">
+                    <div class="tech-border p-8 h-full bg-cyber-dark/50">
+                        <h4 class="text-cyber-primary font-mono mb-6 border-b border-gray-800 pb-2">:: TECHNICAL_PROFICIENCY</h4>
+                        
+                        <div class="space-y-6">
+                            <!-- Skill Bar 1 -->
+                            <div>
+                                <div class="flex justify-between text-xs font-mono text-gray-400 mb-1">
+                                    <span>LANGUAGES (PYTHON, SQL, C++, PHP)</span>
+                                    <span>85%</span>
+                                </div>
+                                <div class="h-2 bg-gray-800 w-full overflow-hidden">
+                                    <div class="h-full bg-cyber-primary w-[85%] relative">
+                                        <div class="absolute inset-0 bg-white/20 animate-pulse"></div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Skill Bar 2 -->
+                            <div>
+                                <div class="flex justify-between text-xs font-mono text-gray-400 mb-1">
+                                    <span>DATA SCIENCE (PANDAS, NUMPY, TF)</span>
+                                    <span>70%</span>
+                                </div>
+                                <div class="h-2 bg-gray-800 w-full overflow-hidden">
+                                    <div class="h-full bg-cyber-secondary w-[70%] relative">
+                                        <div class="absolute inset-0 bg-white/20 animate-pulse"></div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Tools Grid -->
+                            <div class="pt-4">
+                                <span class="text-xs text-gray-500 font-mono block mb-2">:: TOOLKIT</span>
+                                <div class="flex flex-wrap gap-2">
+                                    <span class="px-2 py-1 border border-gray-700 text-xs text-gray-300 font-mono hover:border-cyber-primary hover:text-cyber-primary transition">VS_CODE</span>
+                                    <span class="px-2 py-1 border border-gray-700 text-xs text-gray-300 font-mono hover:border-cyber-primary hover:text-cyber-primary transition">GOOGLE_COLAB</span>
+                                    <span class="px-2 py-1 border border-gray-700 text-xs text-gray-300 font-mono hover:border-cyber-primary hover:text-cyber-primary transition">JUPYTER</span>
+                                    <span class="px-2 py-1 border border-gray-700 text-xs text-gray-300 font-mono hover:border-cyber-primary hover:text-cyber-primary transition">XAMPP</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </section>
+
+    </main>
+
+    <footer class="border-t border-cyber-dim bg-cyber-black py-8">
+        <div class="max-w-7xl mx-auto px-4 text-center">
+            <p class="text-gray-600 font-mono text-sm">
+                &copy; 2025 RITESH KHANDAGALE // oasis INFOBYTE SYSTEM
+            </p>
+            <p class="text-[10px] text-gray-700 font-mono mt-1">NOISE_CANCELLATION_OFF // NEON_MODE_ON</p>
+        </div>
+    </footer>
+
+    <script>
+        // === Task 1 Cyber Logic ===
+        let intervalId;
+        const cpuElement = document.getElementById('cpu-usage');
+        const gpuElement = document.getElementById('gpu-usage');
+        const fpsElement = document.getElementById('fps-count');
+        const cpuBar = document.getElementById('cpu-bar');
+        const gpuBar = document.getElementById('gpu-bar');
+        
+        function updatePerformanceMetrics() {
+            // Add some "jitter" to make it look like real hardware readings
+            const cpu = 45 + Math.floor(Math.random() * 25 - 10); 
+            const gpu = 70 + Math.floor(Math.random() * 20 - 5); 
+            const fps = 60 + Math.floor(Math.random() * 5 - 2);
+
+            cpuElement.textContent = `${cpu}%`;
+            gpuElement.textContent = `${gpu}%`;
+            fpsElement.textContent = `${fps}`;
+            
+            cpuBar.style.width = `${cpu}%`;
+            gpuBar.style.width = `${gpu}%`;
+
+            // Dynamic Coloring based on load
+            if (cpu > 60) cpuBar.style.backgroundColor = '#ff00aa'; // Pink alert
+            else cpuBar.style.backgroundColor = '#00f3ff'; // Cyan normal
+
+            if (gpu > 80) gpuBar.style.backgroundColor = '#ff00aa';
+            else gpuBar.style.backgroundColor = '#00f3ff';
+        }
+
+        function startPerformanceCheck() {
+            updatePerformanceMetrics(); 
+            // Faster refresh rate for "tech" feel
+            intervalId = setInterval(updatePerformanceMetrics, 200);
+        }
+
+        function stopPerformanceCheck() {
+            clearInterval(intervalId);
+            setTimeout(() => {
+                cpuElement.textContent = '0%';
+                gpuElement.textContent = '0%';
+                fpsElement.textContent = '0';
+                cpuBar.style.width = '0%';
+                gpuBar.style.width = '0%';
+            }, 300);
+        }
+        
+        window.startPerformanceCheck = startPerformanceCheck;
+        window.stopPerformanceCheck = stopPerformanceCheck;
+    </script>
+</body>
+</html>
