@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AetherCal Temp Converter</title>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@300;400;600;700&family=Playfair+Display:wght@700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+</head>
+<body>
+
+    <div class="fluid-background-shape shape-one"></div>
+    <div class="fluid-background-shape shape-two"></div>
+    
+    <div class="converter-container">
+        <header class="converter-header">
+            <!-- Updated the name and icon to match the sleek "AetherCal" -->
+            <h1 class="main-title"><i class="fas fa-microchip"></i> AetherCal</h1>
+            <p class="tagline">Atmospheric Precision. Effortless Conversion.</p>
+        </header>
+
+        <div class="input-section flow-element">
+            <label for="temperatureInput" class="input-label">Temperature Value</label>
+            <input type="text" id="temperatureInput" placeholder="Enter number..." autocomplete="off">
+            <p id="validationMessage" class="error-message"></p>
+        </div>
+
+        <div class="unit-selector-grid flow-element">
+            <div class="unit-group">
+                <label for="unitFrom" class="unit-label">FROM</label>
+                <select id="unitFrom" class="styled-select">
+                    <option value="celsius">Celsius (°C)</option>
+                    <option value="fahrenheit">Fahrenheit (°F)</option>
+                    <option value="kelvin">Kelvin (K)</option>
+                </select>
+            </div>
+            
+            <button id="swapButton" class="swap-button" title="Swap Units">
+                <i class="fas fa-exchange-alt"></i>
+            </button>
+
+            <div class="unit-group">
+                <label for="unitTo" class="unit-label">TO</label>
+                <select id="unitTo" class="styled-select">
+                    <option value="fahrenheit">Fahrenheit (°F)</option>
+                    <option value="celsius">Celsius (°C)</option>
+                    <option value="kelvin">Kelvin (K)</option>
+                </select>
+            </div>
+        </div>
+
+        <button id="convertButton" class="action-button flow-element">
+            <i class="fas fa-sync-alt"></i> CONVERT
+        </button>
+
+        <div class="result-display-wrapper flow-element">
+            <p class="result-label">Converted Result</p>
+            <div id="resultDisplay" class="result-box">---</div>
+        </div>
+        
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
